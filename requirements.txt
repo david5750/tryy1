@@ -9,3 +9,5 @@ celery
 requests
 whitenoise
 gunicorn
+django-azure-sql-backend
+django-pyodbc
