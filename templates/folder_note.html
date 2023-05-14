@@ -1,0 +1,210 @@
+{% load static %}
+<html>
+<head>
+    <title> Notes </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/folder_note.css' %}">
+    
+</head>
+
+<body>
+    <style>
+        .fa-angle-double-left{
+            transform: rotate(180deg);
+        }
+
+        .mobi-note-navbar{
+            display: none;
+        }
+
+        .mobi-folder-navbar {
+            display: none;
+        }
+
+        @media (max-width:620px) 
+        {
+
+            .mobi-note-navbar {
+                display: flex;
+            }
+
+            .desktop-note-navbar {
+                display: none;
+            }
+
+            .part1{
+                    display: none;
+                    /* width: 100%; */
+                }
+                
+                .part2{
+                    width: 100%;
+                    /* display: none; */
+            }
+
+            .mobi-folder-navbar{
+                    display: flex;
+            }
+
+            .desktop-folder-navbar{
+                display: none;
+            }
+    }
+    </style>
+
+    <input type="hidden" id="random1" value="{{user_random}}">
+    <!-- Folders parts -->
+    <div class="part1" style="background-color:#5c8a8a;height:100vh;">
+        <!-- part1 -->
+
+        <!-- sub part 1 -->
+
+        <div class="sub-part1  w3-card-2 mobi-folder-navbar"  style="padding:9.8px;height:50px;background-color: #004d66;">
+            <span class="blogo"><img src="{% static 'img/logo.jpg' %}" class=" w3-display-topleft w3-round-xxlarge logo" style="color:white;margin-right:15px;margin-top:8px;" width="36" height="36" alt="G"></span>
+            
+            <p id="note" class='w3-display-topmiddle' style="font-size: 22px;font-weight: 900; margin-top:6px;">Folders</p>
+            
+            <span class="w3-display-topmiddle" style="margin-left:65px;"><i class="fa fa-plus-square-o fa-lg " aria-hidden="true" style="float:right;margin-top:16px; "></i></span>
+            <span class="w3-display-topright"> <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i></span>
+        </div>
+
+        <div class="sub-part1 desktop-folder-navbar w3-card-2" style="background-color: #334d4d;">Folders <i class="fa fa-plus-square-o" aria-hidden="true"
+                style="float:right;margin-top:16px; "></i>
+        </div>
+        
+        {% comment %} <div class="logosubmenu w3-round w3-display-topleft w3-border w3-black w3-card-2 "style="margin-top:55px;margin-right: 4px; padding:5px;display:none;">
+            <ul style="list-style: none; ">
+                <li id="deletefolder"><a href="#"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete Folder</a></li>
+                <li id=""><a href="userchangepassword"><i class="fa fa-exchange fa-lg" aria-hidden="true"></i> Change Password
+                    </a></li>
+                <li><a href="/logout"><i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i> Logout </a></li>
+            </ul>
+        </div> {% endcomment %}
+
+        
+
+        <!-- sub part 2 -->
+        <div class="folder " id='fold-name' >
+
+            <!-- sub part 2(A) insert new folder -->
+            <div class='sub-part2-A' style='display: none;'>
+                <form method='post'>
+                    {% csrf_token %}
+                    <input type='text' id='new_folder_name' placeholder="FolderName" autocomplete="off"
+                        class='folder-name w3-btn w3-round-medium w3-white w3-card-2'>
+                </form>
+                <button style='width:46%' id='save_folder'
+                    class='button-tick-cross w3-btn w3-round-medium  w3-card-2 w3-green  w3-opacity-min'><i
+                        class='fa fa-check fa-lg ' aria-hidden='true'></i></button>
+                <button style='width:46%'
+                    class='button-tick-cross w3-btn w3-round-medium  w3-card-2 w3-red w3-opacity-min'><i
+                        class='fa fa-times fa-lg ' aria-hidden='true'></i></button>
+            </div>
+
+            <!-- sub part 2(B) looping  -->
+            <div id="sub-part-2B">
+                {% for fold in folder_name %}
+                <div class='fold-edit folder-name w3-btn w3-round-medium w3-white w3-card-2'
+                    data-sid='{{fold.random2}}'>
+                    <i class='foldericon fa fa-bars fa-lg w3-opacity w3-left w3-hover-shadow ' data-sid='{{fold.random2}}' style='margin-left:-5px;margin-top: 4px;'
+                        aria-hidden='true'></i>
+                    <h4 style='margin:0px' class="foldernameh4">{{fold.foldername}}</h4>
+                </div>
+                {% endfor %}
+            </div>
+            <input type="hidden" id="random2" value="{{folder1_random}}">
+
+        </div>
+    </div>
+
+
+    <!-- Notes Part -->
+    <!-- <div> -->
+    <div class="part2 note  " style="background-color:#c2d6d6;height:100%;">
+        
+        <div class='menu-bar  w3-card-2 desktop-note-navbar' style="padding:9.8px;background-color: #334d4d;"  >
+            <!-- toogle  -->
+            <i class="fa fa-sign-out fa-2x" style="color:white;" aria-hidden="true"></i>
+            <!-- All Notes  -->
+            <p id="note" class='w3-display-topmiddle' style="font-size: 22px;font-weight: 900; margin-top:6px;color:white;">All Notes</p>
+            <!-- option toogle -->
+            <span class="blogo"><img src="{% static 'img/logo.jpg' %}" class=" w3-display-topright w3-round-xxlarge logo" style="color:white;margin-right:15px;margin-top:8px;" width="36" height="36" alt="G"></span>
+        </div>
+
+        <div class='menu-bar  w3-card-2 mobi-note-navbar' style="padding:9.8px;background-color: #004d66;">
+            <!-- toogle  -->
+            <i class="fa fa-folder fa-2x" style="color:white;" aria-hidden="true"></i>
+            <!-- All Notes  -->
+            <p id="note" class='w3-display-topmiddle' style="font-size: 22px;font-weight: 900; margin-top:6px;color:white;">All Notes</p>
+            <!-- option toogle -->
+                <span class=" w3-display-topright w3-round-xxlarge logo" style="margin-right:15px;margin-top:8px; color:white;"><a href="/logout"><i class="fa fa-sign-in fa-2x"  aria-hidden="true"></i></a></span>
+        </div>
+
+
+
+        <div class="logosubmenu w3-round w3-display-topright w3-border w3-sand w3-card-2 " style="margin-top:55px;margin-right: 4px; padding:5px;display:none;">
+            <ul style="list-style: none; ">
+                <li id="deletefolder"><a href="#"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete Folder</a></li>
+                <li id=""><a href="userchangepassword"><i class="fa fa-exchange fa-lg" aria-hidden="true"></i> Change Password </a></li>
+                <li><a href="/logout"><i class="fa fa-arrow-circle-right fa-lg" aria-hidden="true"></i> Logout </a></li>
+            </ul>
+        </div>
+
+
+        <div class="part2-2b"  >
+            <div id='box' aria-multiline='true' role="textarea" aria-label='lol' class="container">
+
+                <form method="POST" action='' >
+                    {% csrf_token %}
+                    <textarea value="Box1" rows="1" cols="20" placeholder="Title" id='box1' class="no-outline"
+                        onclick="showbox1title();" onkeypress="auto_grow(this);"
+                        onkeyup="auto_grow(this);"></textarea>
+            
+                    <textarea rows="2" cols="49" placeholder="Write a NOtes" value="Box2" id='box2' class='no-outline	'
+                     onclick="showbox1title();" onkeypress="auto_grow(this);"
+                        onkeyup="auto_grow(this);"></textarea>
+                    <input type="hidden" id="random3" value="">
+                    <!-- <input type="hidden" id="toggle" value="0"> -->
+            
+                </form>
+            </div>
+
+            <div class="show-note" style="margin-top: 5px; margin-left: 10px;">
+                {% for note in notedata %}
+                <button class='w3-card notedata  w3-round'  note-sid='{{note.random3}}'  style='background-color:#e6e6e6; width:300px; margin:20px; padding:5px; text-align:left; max-height:188px; overflow:hidden;'>
+                    <i class='fa fa-trash fa-lg' note-sid='{{note.random3}}' style='float:right;'></i>
+                    <div class='notearea' note-sid='{{note.random3}}'>
+                    <p class='title-data' style='font-weight:600;'>  {{note.title}} </p>
+                    <p class='note-data-1' style='align-items:left;float:left;'>{{note.note}}</p>
+                    <!-- <input type="hidden" value="{{note.random2}}" id="noteid"> -->
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function auto_grow(element) {
+            console.log(element);
+            console.log("key press");
+            element.style.height = '8px';
+            console.log(element.scrollHeight);
+            element.style.height = (element.scrollHeight) + 'px';
+        }
+        function showbox1title() {
+            $('#box1').show();
+        }
+    </script>
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% include "auto_save_note_js.html" %}
+    {% include "note_js.html" %}
+    {% include "folder_js.html" %}
+    {% include "folder_note_mobi_js.html" %}
+</body>
+
+</html>

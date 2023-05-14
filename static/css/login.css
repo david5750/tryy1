@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    position: relative;
+}
+
+
+h2 {
+    font-family: 'Inconsolata', monospace;
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: -5px;
+}
+
+
+
+@media (max-width:460px) {
+    #mobi {
+        display: flex;
+        color: green;
+        /* background-color: lavender; */
+        min-height: 100vh;
+    }
+
+    #mobi-footer {
+        /* width: 100vw; */
+        width: 460px;
+        margin-top: auto;
+        background-color: #001a33;
+        text-align: center;
+        color: white;
+    }
+}

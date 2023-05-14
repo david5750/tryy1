@@ -1,0 +1,20 @@
+
+
+/* font-family: 'Inconsolata', monospace; */
+/* h3 {
+    font-family: 'Luxurious Roman', cursive;
+    font-size: 32px;
+    color: #595959;
+    font-weight: 500;
+} */
+
+footer {
+    background-color: #001a33;
+    text-align: center;
+    color: white;
+    position: absolute;
+    /* bottom: 0; */
+    width: 100vw;
+    margin-top: auto;
+    padding: 12px;
+}

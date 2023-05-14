@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Register{% endblock title %}
+
+{% block head %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+{% endblock head %}   
+    
+
+{% block body %}
+
+<!-- <center> -->
+<div class='w3-container' id='mobi' style="margin-left:auto;margin-right:auto;" >
+
+    <center>
+    <div class="w3-container">
+        <img src="{% static 'img/gogo_logo2.jpg' %}" alt='logo' class="w3-circle">
+        <u><h2>Sign up</h2></u>
+    </div>
+    
+    <!-- FORM -->
+    <br>
+    <div class="w3-container" style='max-width: 362px;'>
+        <form method='POST' action='newuserentry'>
+            {% csrf_token %}
+                    
+            <div id="msg" style="text-align: center;color: white; background-color:#ffb3b3;border-radius: 8px; margin-bottom:2px;">
+                    {% for msg in messages %}
+                    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    {{ msg }}
+                    {% endif %}
+                    {% endfor %}</div>
+                    <div id="msg" style="text-align: center;color: white; background-color:#339966;border-radius: 8px; margin-bottom:2px;">
+                    {% for msg in messages %}
+                    {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    {{ msg }}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+            <input class="w3-input w3-round-medium w3-border w3-light-grey" name='newuseremail' type="email" placeholder="  Email" style="padding:9px;">
+            <input class="w3-input w3-round-medium w3-border w3-light-grey" name='newuserpassword' type="password" placeholder="  Password" style="padding:9px;margin-top:8px ;" >
+            <input class="w3-input w3-round-medium w3-border w3-light-grey" name='newusercpassword' type="password" placeholder="  Confirm Password" style="padding:9px;margin-top:8px ;" >
+            <button class="w3-button w3-block w3-teal w3-round-medium w3-padding-16" type="submit" value="Login" style="margin-top:18px;" >Sign Up</button>
+            
+            <div class="login-card-footer-text terms" >
+                <h3>By creating an account you agree to our<br>
+                <a href="http://simplenote.com/terms/" > Terms of Service.</a></h3>
+            </div>
+            <p style="color:#343a40" class="login-card-footer-text">Already have an account? <a href="/login"
+                    class="text-reset">Log in</a></p>
+           
+       
+        </form>
+    </div>
+</center>
+</div><br>
+
+{% endblock body %}
+

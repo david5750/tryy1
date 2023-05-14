@@ -1,0 +1,10 @@
+virtualenv
+Django
+django-mssql-backend
+mssql-django
+pyodbc
+cryptography
+celery
+requests
+whitenoise
+gunicorn

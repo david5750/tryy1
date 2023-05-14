@@ -1,0 +1,14 @@
+footer {
+    background-color: #001a33;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+h3 {
+    font-family: 'Luxurious Roman', cursive;
+    /* font-family: 'Inconsolata', monospace; */
+    font-size: 32px;
+    color: #595959;
+    font-weight: 500;
+}

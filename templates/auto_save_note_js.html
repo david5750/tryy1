@@ -1,0 +1,195 @@
+<script>
+$(document).ready(function () {
+    console.log('hello notes');
+$('.fa-sign-out').click(function () {
+    console.log('notes part active');
+    if ($(".part1").is(":visible")) {
+        $(".part1").hide();
+    // $(".part2").delay(slow).css("width", "100%");
+    // $(".part").delay(slow);
+    $(".part2").css("width", "100%");
+        }
+    else {
+        $(".part1").show(500);
+    $(".part2").css("width", "80%");
+        }
+    });
+
+
+    // show note on click on folder ::   
+    $('div').on('click', '.fold-edit', function () {
+        let datasid = $(this).attr("data-sid");
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        let user_random = $("#random1").val();
+        $("#random2").val(datasid);
+        $.ajax({
+            url: "{% url 'shownote' %}",
+            method: "POST",
+            data: { random2: datasid, csrfmiddlewaretoken: csr, user_random: user_random },
+            success: function (data) {
+            let x = data.notedata;
+            if (x == "")
+            {
+                $(".show-note").html("<center style='margin-left:-15px;'> <i class='fa fa-sticky-note-o fa-5x' aria-hidden='true'></i> <br><h1>No note</h1></center>");
+            }
+            else
+            {
+                output = '';
+                for (let i =0 ; i < x.length ; i++)
+                {
+                output += "<button class='w3-card notedata w3-pale-yellow w3-round' note-sid='" + x[i].random3 + "' style='width:300px; margin:20px; padding:5px; text-align:left; max-height:188px; overflow:hidden;'><i class='fa fa-trash fa-lg' note-sid='" + x[i].random3 + "' style ='float:right;'></i ><div class='notearea' note-sid='" + x[i].random3 + "'>  <p class='title-data' style='font-weight:600;'>  </p> <p class='note-data-1'  style='align-items:left;float:left;'></p></button ></div>";
+                }
+
+                $(".show-note").html(output);
+
+                for (let i = 0; i < x.length; i++)
+                {
+                    $('.title-data').eq(i).text(x[i].title);
+                    $('.note-data-1').eq(i).text(x[i].note);
+                }
+            }
+
+            }
+        });
+    });    
+
+});
+
+    // Add NOTE
+    $(document).ready(function () {           //("#notauto").click
+        // $("#box1,#box2").keyup(function()  
+        function autoSave() {
+            var post_title = $('#box1').val();
+            var post_description = $('#box2').val();
+            let user_random = $("#random1").val();
+            let random2 = $('#random2').val();
+            let random3 = $('#random3').val();
+            let csr = $("input[name=csrfmiddlewaretoken]").val();
+
+            if (post_description != '' || post_title != '') {
+                $.ajax({
+                    url: "{% url 'addnote' %}",
+                    method: "POST",
+                    data: { postTitle: post_title, postDescription: post_description, dataid3: random2, random3: random3, csrfmiddlewaretoken: csr, user_random: user_random},
+                    success: function (data) {
+                        $('#random3').val(data.random3);
+
+                    }
+                });
+            }
+        }
+    setInterval(function () {
+        autoSave();
+    }, 2000);
+});
+
+
+    //load and clear text from text field 
+    $(document).ready(function () {
+        $(document).on('click', 'body', function (divclose) {
+            if ($(divclose.target).closest('#box, .notedata').length == 0) {
+                let csr = $("input[name=csrfmiddlewaretoken]").val();
+                let random2 = $('#random2').val();
+                let user_random = $("#random1").val();
+                mydata = { csrfmiddlewaretoken: csr, random2: random2 };
+                $.ajax({
+                    url: "{% url 'shownote' %}",
+                    method: 'POST',
+                    data: mydata,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            x = data.notedata;
+
+                            if (x == "") {
+                                $(".show-note").html("<center style='margin-left:-15px;'> <i class='fa fa-sticky-note-o fa-5x' aria-hidden='true'></i> <br><h1>No note</h1></center>");
+
+                            }
+                            else {
+                                console.log(x[0].title);
+                                output = '';
+                                for (let i = 0; i < x.length; i++) {
+                                    output += "<button class='w3-card notedata w3-pale-yellow w3-round' note-sid='" + x[i].random3 + "' style='width:300px; margin:20px; padding:5px; text-align:left; max-height:188px; overflow:hidden;'><i class='fa fa-trash fa-lg' note-sid='" + x[i].random3 + "' style ='float:right;'></i ><div class='notearea'  note-sid='" + x[i].random3 + "'> <p class='title-data' style='font-weight:600;'>  </p><p class='note-data-1' style='align-items:left;float:left;'></p> </div></button >";
+                                }
+                                $(".show-note").html(output);
+
+                                for (let i = 0; i < x.length; i++) {
+                                    $('.title-data').eq(i).text(x[i].title);
+                                    $('.note-data-1').eq(i).text(x[i].note);
+                                }
+
+                                $("#box1").val('');
+                                $("#box2").val('');
+                                $('#random3').val('');
+                                $('#box1').css('height', '5');
+                                $('#box2').css('height', '20');
+                            }
+                        }
+                        else {
+                            console.log("error in load folder");
+                        }
+                    }
+                });
+            }
+
+        });
+})
+
+
+    $(document).ready(function() {
+        //EDIT
+        $('div').on('click', '.notearea', function () {
+            let random3 = $(this).attr('note-sid');
+            let user_random = $("#random1").val();
+            let csr = $("input[name=csrfmiddlewaretoken]").val();
+
+            $.ajax({
+                url: "{% url 'editnote' %}",
+                method: "POST",
+                data: { random3: random3, csrfmiddlewaretoken: csr },
+                success: function (data) {
+                    let x = data.notedata;
+                    console.log(x);
+                    $('#box1').val(x[0].title);
+                    $('#box2').val(x[0].note);
+                    $("#random3").val(x[0].random3);
+
+                    $('#box1').css('height', '5');
+                    $('#box2').css('height', '20');
+
+                    var elmnt = document.getElementById("box1");
+                    z = elmnt.scrollHeight + 2;
+                    $('#box1').css('height', z);
+
+                    var elmnt = document.getElementById("box2");
+                    var y = elmnt.scrollHeight + 4;
+                    $('#box2').css('height', y);
+                    $('#box2').focus();
+                }
+            });
+
+        });
+
+    //DEL
+    $('div').on('click','.fa-trash', function(){
+        let random3 = $(this).attr('note-sid');
+    $(this).parent().fadeOut();
+    let csr = $("input[name=csrfmiddlewaretoken]").val();
+
+    $.ajax({
+        url: "{% url 'delnote' %}",
+        method: "POST",
+        data: { random3: random3, csrfmiddlewaretoken: csr },
+        success: function (data) {
+        if (data.status == 1) {
+            console.log("delete success");
+        }
+        else{
+            console.log("delete unsuccessful");
+            }
+        }
+    });
+    });
+});
+
+
+</script>

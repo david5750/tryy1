@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %} {% endblock title %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2020.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
+
+    {% block head %} {% endblock head %}
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+<body>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("demo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+    </script>
+    <!-- NAVBAR -->
+    <div class="w3-top">
+        <div class="w3-bar w3-2020-navy-blazer w3-padding w3-card w3-padding-16" style="letter-spacing:4px;">
+            <img src="{% static 'img/logo.jpg' %}" class="w3-display-left w3-round-xxlarge logo"
+                style="color:white;margin-left:8px;" width="36" height="36" alt='logo'>
+            <a href='/'  class="w3-bar-item w3-button w3-hover-none" style="margin-left:18px;font-size:18px;">Gogo Notes</a>
+            <!-- Right-sided navbar links. Hide them on small screens -->
+            <div class="w3-right w3-hide-small">
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="#contact" class="w3-bar-item w3-button">Contact</a>
+                <a href="/login" class="w3-bar-item w3-button">Log In</a>
+            </div>
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="myFunction()">&#9776;</a>
+            <div id="demo" class="w3-bar-block  w3-hide w3-hide-large w3-hide-medium">
+                <a href="#about" class="w3-bar-item w3-button">About</a>
+                <a href="#contact" class="w3-bar-item w3-button">Contact</a>
+                <a href="/login" class="w3-bar-item w3-button">Log In</a>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <!-- NAVBAR -->
+
+    {% block body %} {% endblock body %}
+
+    <footer id='mobi-footer'>
+        <p style='bottom:0;left:0;'>Copyright  &copy; 2021-2022 GOGO.com
+            <script>document.write(new Date().getFullYear());</script>
+        </p>
+    </footer>
+
+</body>
+
+</html>
