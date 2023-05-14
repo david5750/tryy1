@@ -1,5 +1,6 @@
 virtualenv
 Django
+mysqlclient
 django-mssql-backend
 mssql-django
 pyodbc
