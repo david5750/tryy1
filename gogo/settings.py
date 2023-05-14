@@ -92,20 +92,19 @@ WSGI_APPLICATION = 'gogo.wsgi.application'
 
 DATABASES = {
     'default': {
-#         'ENGINE': 'mysql',
-        'ENGINE': 'django.db.backends.mysql',
-        # 'ENGINE': 'sql_server_pyodc',
-        'HOST': 'demo1serverdjango.database.windows.net',
-        'PORT': '',
-        'NAME': 'gogo__note',
-        'USER': 'vivek',
-        'PASSWORD': 'Always4ume&@',
-
+        'ENGINE': 'sql_server.pyodbc',  
+        'NAME': 'gogo-note',
+        'HOST': 'django12.database.windows.net',
+        'PORT': '1433',
+        'USER': 'vpoo',
+        'PASSWORD': 'Vivek123@',
         'OPTIONS': {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-            'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'encrypt': 'yes',
+            'trust_server_certificate': 'no',
+            'connection_timeout': 50,
         },
-    },
+    }
 }
 
 # Password validation
